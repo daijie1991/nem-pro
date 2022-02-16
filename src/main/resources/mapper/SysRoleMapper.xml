@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nem.pro.modules.sys.mapper.SysRoleMapper">
+
+    <resultMap id="SysRoleMap" type="com.nem.pro.modules.sys.domain.SysRole">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="enable" property="enable"></result>
+        <result column="sort" property="sort"></result>
+        <result column="remark" property="remark"></result>
+        <result column="deleted" property="deleted"></result>
+        <result column="create_by" property="createBy"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_by" property="updateBy"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="project_id" property="projectId"></result>
+        <result column="tenant_id" property="tenantId"></result>
+        <result column="scope" property="scope"></result>
+    </resultMap>
+
+    <select id="selectList" resultMap="SysRoleMap">
+        select * from sys_role
+        <where>
+            <if test="code!=null and code!=''">
+                and role_code like "%"#{code}"%"
+            </if>
+            <if test="name!=null and name!=''">
+                and name like "%"#{name}"%"
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据 Id 查询角色-->
+    <select id="selectById" parameterType="string" resultMap="SysRoleMap">
+        select * from sys_role where id = #{id}
+    </select>
+
+    <!-- 根据 用户ID-->
+    <select id="selectByUserId" resultMap="SysRoleMap">
+        select * from sys_role sr
+        left join sys_user_role sur on sr.id = sur.role_id
+        left join sys_user su on su.id = sur.user_id
+        where su.id = #{userId} and sr.enable = 1
+    </select>
+
+    <!-- 根据 用户名-->
+    <select id="selectByUsername" resultMap="SysRoleMap">
+        select * from sys_role sr
+        left join sys_user_role sur on sr.id = sur.role_id
+        left join sys_user su on su.id = sur.user_id
+        where su.username = #{username} and sr.enable = 1
+    </select>
+
+    <!-- 新增 SysRole 数据 -->
+    <insert id="insert" parameterType="com.nem.pro.modules.sys.domain.SysRole">
+        insert into sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                id,
+            </if>
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="code!=null">
+                code,
+            </if>
+            <if test="enable!=null">
+                enable,
+            </if>
+            <if test="sort!=null">
+                sort,
+            </if>
+            <if test="remark!=null">
+                remark,
+            </if>
+            <if test="deleted!=null">
+                deleted,
+            </if>
+            <if test="createBy!=null">
+                create_by,
+            </if>
+            <if test="createTime!=null">
+                create_time,
+            </if>
+            <if test="updateBy!=null">
+                update_by,
+            </if>
+            <if test="updateTime!=null">
+                update_time,
+            </if>
+            <if test="projectId!=null">
+                project_id,
+            </if>
+            <if test="tenantId!=null">
+                tenant_id,
+            </if>
+            <if test="scope!=null">
+                scope
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="code!=null">
+                #{code},
+            </if>
+            <if test="enable!=null">
+                #{enable},
+            </if>
+            <if test="sort!=null">
+                #{sort},
+            </if>
+            <if test="remark!=null">
+                #{remark},
+            </if>
+            <if test="deleted!=null">
+                #{deleted},
+            </if>
+            <if test="createBy!=null">
+                #{create_by},
+            </if>
+            <if test="createTime!=null">
+                #{create_time},
+            </if>
+            <if test="updateBy!=null">
+                #{update_by},
+            </if>
+            <if test="updateTime!=null">
+                #{update_time},
+            </if>
+            <if test="projectId!=null">
+                #{project_id},
+            </if>
+            <if test="tenantId!=null">
+                #{tenant_id},
+            </if>
+            <if test="scope!=null">
+                #{scope},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据 Id 修改角色数据 -->
+    <update id="updateById" parameterType="com.nem.pro.modules.sys.domain.SysRole">
+        update sys_role
+        <set>
+            <if test="name!=null and name!=''">
+                name = #{name},
+            </if>
+            <if test="code!=null and code!=''">
+                code = #{code},
+            </if>
+            <if test="enable!=null and enable!=''">
+                enable = #{enable},
+            </if>
+            <if test="sort!=null and sort!=''">
+                sort = #{sort},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark = #{remark},
+            </if>
+            <if test="deleted!=null and deleted!=''">
+                deleted = #{deleted},
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime!=null and createTime!=''">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                update_time = #{updateTime},
+            </if>
+            <if test="projectId!=null and projectId!=''">
+                project_id = #{projectId},
+            </if>
+            <if test="tenantId!=null and tenantId!=''">
+                tenant_id = #{tenantId},
+            </if>
+            <if test="scope!=null and scope!=''">
+                scope = #{scope},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据 Id 删除用户数据 -->
+    <delete id="deleteById" parameterType="string">
+          delete from sys_role where role_id = #{id}
+    </delete>
+
+    <!-- 根据 Id 批量删除用户数据 -->
+    <delete id="deleteByIds" parameterType="string">
+        delete from sys_role where role_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--返回列表-->
+    <select id="selectRole" resultType="com.nem.pro.modules.sys.domain.SysRole">
+        select * from sys_role sr
+        <where>
+            <if test="request.name!=null and request.name!=''">
+                sr.name like concat('%', #{request.name}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

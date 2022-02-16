@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nem.pro.modules.sys.mapper.SysPostMapper">
+
+    <select id="selectPost" resultType="com.nem.pro.modules.sys.domain.SysPost">
+        select * from sys_post sp
+        <where>
+            <if test="request.name!=null and request.name!=''">
+               and sp.name like concat('%', #{request.name}, '%')
+            </if>
+            <if test="request.code!=null and request.code!=''">
+                and sp.code like concat('%', #{request.code}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据 Id 修改用户数据 -->
+    <update id="updateById" parameterType="com.nem.pro.modules.sys.domain.SysPost">
+        update sys_post
+        <set>
+            <if test="name!=null and name!=''">
+                name = #{name},
+            </if>
+            <if test="code!=null and code!=''">
+                code = #{code},
+            </if>
+            <if test="sort!=null and sort!=''">
+                sort = #{sort},
+            </if>
+            <if test="enable!=null and enable!=''">
+                enable = #{enable},
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                update_time = #{updateTime},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark = #{remark}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据 Id 删除数据 -->
+    <delete id="deleteById" parameterType="string">
+          delete from sys_post where id = #{id}
+    </delete>
+
+    <!-- 根据 Id 批量删除数据 -->
+    <delete id="deleteByIds" parameterType="string">
+        delete from sys_post where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="com.nem.pro.modules.sys.domain.SysPost">
+        insert into sys_post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                id,
+            </if>
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="code!=null">
+                address,
+            </if>
+            <if test="sort!=null">
+                sort,
+            </if>
+            <if test="enable!=null">
+                enable,
+            </if>
+            <if test="createBy!=null">
+                create_by,
+            </if>
+            <if test="createTime!=null">
+                create_time,
+            </if>
+            <if test="updateBy!=null">
+                update_by,
+            </if>
+            <if test="updateTime!=null">
+                update_time,
+            </if>
+            <if test="deleted!=null">
+                deleted,
+            </if>
+            <if test="remark!=null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="code!=null">
+                #{code},
+            </if>
+            <if test="sort!=null">
+                #{sort},
+            </if>
+            <if test="enable!=null">
+                #{enable},
+            </if>
+            <if test="createBy!=null">
+                #{createBy},
+            </if>
+            <if test="createTime!=null">
+                #{createTime},
+            </if>
+            <if test="updateBy!=null">
+                #{updateBy},
+            </if>
+            <if test="deleted!=null">
+                #{deleted},
+            </if>
+            <if test="remark!=null">
+                #{remark}
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

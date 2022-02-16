@@ -1,0 +1,25 @@
+## tomcat 配置
+server:
+  ## 监听端口
+  port: 8080
+
+#spring 配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/pear-admin-pro?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=GMT&zeroDateTimeBehavior=convertToNull
+#      url: jdbc:mysql://127.0.0.1:3306/nem-pro?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=GMT&zeroDateTimeBehavior=convertToNull
+      username: root
+      password:
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      ddl-auto: update
+
+#MyBatis扫描mapper文件配置
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.nem.pro.modules.sys.mapper

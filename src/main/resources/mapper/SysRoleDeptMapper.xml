@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nem.pro.modules.sys.mapper.SysRoleDeptMapper">
+
+    <resultMap id="SysRoleDeptMap" type="com.nem.pro.modules.sys.domain.SysRoleDept">
+        <id column="id" property="id"></id>
+        <result column="dept_id" property="deptId"></result>
+        <result column="role_id" property="roleId"></result>
+    </resultMap>
+
+    <!-- 根据 RoleId 删除角色数据 -->
+    <delete id="deleteByRoleId" parameterType="string">
+          delete from sys_role_dept where role_id = #{roleId}
+    </delete>
+
+    <insert id="batchInsert" parameterType="list">
+        insert into sys_role_dept
+        ( id, dept_id, role_id )
+        values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.id}, #{item.deptId}, #{item.roleId})
+        </foreach >
+    </insert>
+
+</mapper>
